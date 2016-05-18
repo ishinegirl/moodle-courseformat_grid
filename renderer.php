@@ -562,6 +562,18 @@ class format_grid_renderer extends format_section_renderer_base {
         if ($course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
             $singlepageurl = $this->courseformat->get_view_url(null)->out(true);
         }
+        
+        
+        //get module completions by JUSTIN 2016/05/18
+        global $DB,$USER;
+        $sql = "SELECT cs.section AS section,";
+        $sql .= " count( CASE when cmc.userid = ? then 1 else null end ) AS completed,";
+        $sql .= " count(cm.id) as total";
+        $sql .=" FROM {course_modules_completion} cmc RIGHT OUTER JOIN {course_modules} cm ON cm.id = cmc.coursemoduleid";
+        $sql .=" INNER JOIN {course_sections} cs ON cm.section = cs.id";
+        $sql .=" WHERE cm.course=? AND cm.completion > 0 GROUP BY cm.section ORDER BY cs.section";
+        $section_completions = $DB->get_records_sql($sql,array($USER->id,$course->id));
+         
 
         // Start at 1 to skip the summary block or include the summary block if it's in the grid display.
         for ($section = $this->topic0attop ? 1 : 0; $section <= $course->numsections; $section++) {
@@ -572,6 +584,10 @@ class format_grid_renderer extends format_section_renderer_base {
                     ($thissection->visible && !$thissection->available &&
                     !empty($thissection->availableinfo)));
             $showsection = $hascapvishidsect || $section_visible;
+            
+            //check if the section is completed by JUSTIN 2016/05/18
+            $sectioncomplete = $section_completions[$section]->completed == 
+            							$section_completions[$section]->total;
                
              //if we should grey it out, flag that here. Justin 2016/05/14  
             $section_unavailable = !$thissection->available;     
@@ -635,6 +651,8 @@ class format_grid_renderer extends format_section_renderer_base {
 
 					$imageclass = 'image_holder';
 					if($sectiongreyedout) $imageclass .= ' inaccessible';
+					if($sectioncomplete) $imageclass .= ' sectioncomplete'; //JUSTIN 2016/05/18
+					
                     echo html_writer::start_tag('div', array('class' => $imageclass));
 
                     $showimg = false;
@@ -675,6 +693,7 @@ class format_grid_renderer extends format_section_renderer_base {
 					//grey out code: Justin 2016/05/14
 					$imageclass = 'image_holder';
 					if($sectiongreyedout) $imageclass .= ' inaccessible';
+					if($sectioncomplete) $imageclass .= ' sectioncomplete'; //JUSTIN 2016/05/18
                     $content .= html_writer::start_tag('div', array('class' => $imageclass));
 
                     $showimg = false;
