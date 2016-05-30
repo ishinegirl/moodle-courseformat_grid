@@ -671,7 +671,7 @@ class format_grid_renderer extends format_section_renderer_base {
 							echo html_writer::empty_tag('img', array(
                             'src' => $complete_img_url,
                             'alt' =>get_string('completion-alt-auto-y','completion',$sectionname),
-							'class'=>'course_pass',
+							'class'=>'section_complete',
                             'role' => 'img',
                             'aria-label' => get_string('completion-alt-auto-y','completion',$sectionname)));
 						}
@@ -724,7 +724,7 @@ class format_grid_renderer extends format_section_renderer_base {
 							 $content .= html_writer::empty_tag('img', array(
 								'src' => $complete_img_url,
 								'alt' => get_string('completion-alt-auto-y','completion',$sectionname),
-								'class'=>'course_pass',
+								'class'=>'section_complete',
 								'role' => 'img',
 								'aria-label' => get_string('completion-alt-auto-y','completion',$sectionname)));
 						}

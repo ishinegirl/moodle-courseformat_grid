@@ -382,6 +382,11 @@ body.jsenabled #gridshadebox_content.hide_content {
 #gridshadebox_content ul.gtopics {
     margin: 0 15px 10px;
 }
+.course-content ul.gridicons img.section_complete {
+    position: absolute;
+    margin-top: 75px;
+    margin-left: 105px;
+}
 
 /* Added by Justin 20160514 */
 .inaccessible {
