@@ -568,7 +568,7 @@ class format_grid_renderer extends format_section_renderer_base {
         global $DB,$USER;
         $sql = "SELECT cs.section AS section,";
         $sql .= " count( CASE when cmc.userid = ? then 1 else null end ) AS completed,";
-        $sql .= " count(cm.id) as total";
+        $sql .= " count(Distinct(cm.id)) as total";
         $sql .=" FROM {course_modules_completion} cmc RIGHT OUTER JOIN {course_modules} cm ON cm.id = cmc.coursemoduleid";
         $sql .=" INNER JOIN {course_sections} cs ON cm.section = cs.id";
         $sql .=" WHERE cm.course=? AND cm.completion > 0 GROUP BY cm.section ORDER BY cs.section";
@@ -651,7 +651,6 @@ class format_grid_renderer extends format_section_renderer_base {
 
 					$imageclass = 'image_holder';
 					if($sectiongreyedout) $imageclass .= ' inaccessible';
-					if($sectioncomplete) $imageclass .= ' sectioncomplete'; //JUSTIN 2016/05/18
 					
                     echo html_writer::start_tag('div', array('class' => $imageclass));
 
@@ -666,6 +665,18 @@ class format_grid_renderer extends format_section_renderer_base {
                         $showimg = true;
                     }
                     if ($showimg) {
+						 //JUSTIN 2016/05/30
+						if($sectioncomplete) {
+							$complete_img_url = $CFG->wwwroot . '/course/format/grid/pix/stamp_pass.png';
+							echo html_writer::empty_tag('img', array(
+                            'src' => $complete_img_url,
+                            'alt' =>get_string('completion-alt-auto-y','completion',$sectionname),
+							'class'=>'course_pass',
+                            'role' => 'img',
+                            'aria-label' => get_string('completion-alt-auto-y','completion',$sectionname)));
+						}
+					
+					
                         echo html_writer::empty_tag('img', array(
                             'src' => $imgurl,
                             'alt' => $sectionname,
@@ -693,7 +704,7 @@ class format_grid_renderer extends format_section_renderer_base {
 					//grey out code: Justin 2016/05/14
 					$imageclass = 'image_holder';
 					if($sectiongreyedout) $imageclass .= ' inaccessible';
-					if($sectioncomplete) $imageclass .= ' sectioncomplete'; //JUSTIN 2016/05/18
+
                     $content .= html_writer::start_tag('div', array('class' => $imageclass));
 
                     $showimg = false;
@@ -707,6 +718,16 @@ class format_grid_renderer extends format_section_renderer_base {
                         $showimg = true;
                     }
                     if ($showimg) {
+						 //JUSTIN 2016/05/30
+						if($sectioncomplete) {
+							$complete_img_url = $CFG->wwwroot . '/course/format/grid/pix/stamp_pass.png';
+							 $content .= html_writer::empty_tag('img', array(
+								'src' => $complete_img_url,
+								'alt' => get_string('completion-alt-auto-y','completion',$sectionname),
+								'class'=>'course_pass',
+								'role' => 'img',
+								'aria-label' => get_string('completion-alt-auto-y','completion',$sectionname)));
+						}
                         $content .= html_writer::empty_tag('img', array(
                                     'src' => $imgurl,
                                     'alt' => $sectionname,
