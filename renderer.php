@@ -567,11 +567,12 @@ class format_grid_renderer extends format_section_renderer_base {
         //get module completions by JUSTIN 2016/05/18
         global $DB,$USER;
         $sql = "SELECT cs.section AS section,";
-        $sql .= " count( CASE when cmc.userid = ? then 1 else null end ) AS completed,";
+        $sql .= " count( CASE when (cmc.userid = ? AND cmc.completionstate > 0)  then 1 else null end ) AS completed,";
         $sql .= " count(Distinct(cm.id)) as total";
         $sql .=" FROM {course_modules_completion} cmc RIGHT OUTER JOIN {course_modules} cm ON cm.id = cmc.coursemoduleid";
         $sql .=" INNER JOIN {course_sections} cs ON cm.section = cs.id";
-        $sql .=" WHERE cm.course=? AND cm.completion > 0 GROUP BY cm.section ORDER BY cs.section";
+        $sql .=" WHERE cm.course=? AND cm.completion > 0 ";
+        $sql .=" GROUP BY cm.section ORDER BY cs.section";
         $section_completions = $DB->get_records_sql($sql,array($USER->id,$course->id));
          
 
