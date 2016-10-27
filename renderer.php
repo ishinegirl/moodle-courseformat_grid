@@ -587,8 +587,13 @@ class format_grid_renderer extends format_section_renderer_base {
             $showsection = $hascapvishidsect || $section_visible;
             
             //check if the section is completed by JUSTIN 2016/05/18
-            $sectioncomplete = ($section_completions[$section]->completed == 
-            							$section_completions[$section]->total) && ($section_completions[$section]->total>0) ;
+            if(array_key_exists($section,$section_completions)){
+				$sectioncomplete = ($section_completions[$section]->completed == 
+											$section_completions[$section]->total) 
+											&& ($section_completions[$section]->total>0) ;
+            }else{
+            	$sectioncomplete=false;
+            }
                
              //if we should grey it out, flag that here. Justin 2016/05/14  
             $section_unavailable = !$thissection->available;     
