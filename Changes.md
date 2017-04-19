@@ -1,5 +1,30 @@
 History
 =============
+Version 3.1.1.2
+  1. Fix 'Embedded videos still load in one section per page mode' - #39.
+  2. Fix '"bordercolour" is set to 0 when creating courses using the "Upload courses" tool' - CONTRIB-6655.
+  3. Fix 'Managers assigned at Course Category levels cannot create a course with grid format selected' - #42.
+
+Version 3.1.1.1
+  1. Improve deletion.
+  2. Section title text format options.  Thanks to Murdoch University, Perth, WA for supporting this enhancement.
+
+Version 3.1.1.0
+  1. Changes for MDL-54557.
+  2. Fix layout rendering issues when section name is empty by using the single space trick - #36.
+  3. Fix truncate long section names in the grid - #33.
+  4. Improve deletion.  Ref: https://moodle.org/mod/forum/discuss.php?d=334353#p1384895.
+
+Version 3.1.0.1
+  1. First 'beta' version for M3.1.
+  2. Changes for MDL-51802.
+
+Version 3.0.1.1
+  1. Updated php4 constructor - #27 - thanks to Mark Sharp.
+  2. Added the ability to grey out and unlink grid icons for unavailable sections - #30 - thanks to Justin Hunt.
+  3. Travis CI fixes.
+  4. Fixes for #30 in IE.
+
 Version 3.0.1
   1. Implement MDL-26226.
 
