@@ -620,7 +620,7 @@ class format_grid_renderer extends format_section_renderer_base {
                     ($thissection->visible && !$thissection->available &&
                     !empty($thissection->availableinfo)));
 
-            $showsection = $hascapvishidsect || $section_visible;
+            $showsection = $hascapvishidsect || $sectionvisible; 
             
             //check if the section is completed by JUSTIN 2016/05/18
             if(array_key_exists($section,$section_completions)){
@@ -632,7 +632,7 @@ class format_grid_renderer extends format_section_renderer_base {
             }
                
              //if we should grey it out, flag that here. Justin 2016/05/14  
-            $section_unavailable = !$thissection->available;     
+            $sectionunavailable = !$thissection->available;     
 
             $greyouthidden = $this->settings['greyouthidden'] == 2;
             $sectiongreyedout = $sectionunavailable && !$hascapvishidsect && $greyouthidden;
